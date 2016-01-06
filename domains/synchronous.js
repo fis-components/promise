@@ -17,38 +17,38 @@ Promise.enableSynchronous = function () {
   };
 
   Promise.prototype.getValue = function () {
-    if (this._25 === 3) {
-      return this._14.getValue();
+    if (this._81 === 3) {
+      return this._65.getValue();
     }
 
     if (!this.isFulfilled()) {
       throw new Error('Cannot get a value of an unfulfilled promise.');
     }
 
-    return this._14;
+    return this._65;
   };
 
   Promise.prototype.getReason = function () {
-    if (this._25 === 3) {
-      return this._14.getReason();
+    if (this._81 === 3) {
+      return this._65.getReason();
     }
 
     if (!this.isRejected()) {
       throw new Error('Cannot get a rejection reason of a non-rejected promise.');
     }
 
-    return this._14;
+    return this._65;
   };
 
   Promise.prototype.getState = function () {
-    if (this._25 === 3) {
-      return this._14.getState();
+    if (this._81 === 3) {
+      return this._65.getState();
     }
-    if (this._25 === -1 || this._25 === -2) {
+    if (this._81 === -1 || this._81 === -2) {
       return 0;
     }
 
-    return this._25;
+    return this._81;
   };
 };
 

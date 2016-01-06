@@ -58,16 +58,16 @@ function Promise(fn) {
   if (typeof fn !== 'function') {
     throw new TypeError('not a function');
   }
-  this._56 = 0;
-  this._25 = 0;
-  this._14 = null;
-  this._95 = null;
+  this._45 = 0;
+  this._81 = 0;
+  this._65 = null;
+  this._54 = null;
   if (fn === noop) return;
   doResolve(fn, this);
 }
-Promise._87 = null;
-Promise._79 = null;
-Promise._22 = noop;
+Promise._10 = null;
+Promise._97 = null;
+Promise._61 = noop;
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
   if (this.constructor !== Promise) {
@@ -86,24 +86,24 @@ function safeThen(self, onFulfilled, onRejected) {
   });
 };
 function handle(self, deferred) {
-  while (self._25 === 3) {
-    self = self._14;
+  while (self._81 === 3) {
+    self = self._65;
   }
-  if (Promise._87) {
-    Promise._87(self);
+  if (Promise._10) {
+    Promise._10(self);
   }
-  if (self._25 === 0) {
-    if (self._56 === 0) {
-      self._56 = 1;
-      self._95 = deferred;
+  if (self._81 === 0) {
+    if (self._45 === 0) {
+      self._45 = 1;
+      self._54 = deferred;
       return;
     }
-    if (self._56 === 1) {
-      self._56 = 2;
-      self._95 = [self._95, deferred];
+    if (self._45 === 1) {
+      self._45 = 2;
+      self._54 = [self._54, deferred];
       return;
     }
-    self._95.push(deferred);
+    self._54.push(deferred);
     return;
   }
   handleResolved(self, deferred);
@@ -111,16 +111,16 @@ function handle(self, deferred) {
 
 function handleResolved(self, deferred) {
   setImmediate(function() {
-    var cb = self._25 === 1 ? deferred.onFulfilled : deferred.onRejected;
+    var cb = self._81 === 1 ? deferred.onFulfilled : deferred.onRejected;
     if (cb === null) {
-      if (self._25 === 1) {
-        resolve(deferred.promise, self._14);
+      if (self._81 === 1) {
+        resolve(deferred.promise, self._65);
       } else {
-        reject(deferred.promise, self._14);
+        reject(deferred.promise, self._65);
       }
       return;
     }
-    var ret = tryCallOne(cb, self._14);
+    var ret = tryCallOne(cb, self._65);
     if (ret === IS_ERROR) {
       reject(deferred.promise, LAST_ERROR);
     } else {
@@ -148,8 +148,8 @@ function resolve(self, newValue) {
       then === self.then &&
       newValue instanceof Promise
     ) {
-      self._25 = 3;
-      self._14 = newValue;
+      self._81 = 3;
+      self._65 = newValue;
       finale(self);
       return;
     } else if (typeof then === 'function') {
@@ -157,29 +157,29 @@ function resolve(self, newValue) {
       return;
     }
   }
-  self._25 = 1;
-  self._14 = newValue;
+  self._81 = 1;
+  self._65 = newValue;
   finale(self);
 }
 
 function reject(self, newValue) {
-  self._25 = 2;
-  self._14 = newValue;
-  if (Promise._79) {
-    Promise._79(self, newValue);
+  self._81 = 2;
+  self._65 = newValue;
+  if (Promise._97) {
+    Promise._97(self, newValue);
   }
   finale(self);
 }
 function finale(self) {
-  if (self._56 === 1) {
-    handle(self, self._95);
-    self._95 = null;
+  if (self._45 === 1) {
+    handle(self, self._54);
+    self._54 = null;
   }
-  if (self._56 === 2) {
-    for (var i = 0; i < self._95.length; i++) {
-      handle(self, self._95[i]);
+  if (self._45 === 2) {
+    for (var i = 0; i < self._54.length; i++) {
+      handle(self, self._54[i]);
     }
-    self._95 = null;
+    self._54 = null;
   }
 }
 
